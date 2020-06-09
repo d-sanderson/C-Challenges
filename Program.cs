@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 
 namespace Peeps
@@ -7,8 +8,69 @@ namespace Peeps
     {
         static void Main(string[] args)
         {
-            CountVowels();
+            var path = @"c:\temp\derp.txt";
 
+            var content = ReadFile(path);
+            var longestWord = FindLongestWordInSentence(content);
+            Console.WriteLine(longestWord);
+        }
+
+        private static string FindLongestWordInSentence(string content)
+        {
+            var words = content.Split(" ");
+            var longest = 0;
+            string word = "";
+            foreach (String s in words)
+            {
+                if (s.Length > longest)
+                {
+                    longest = s.Length;
+                    word = s;
+                }
+            }
+            return word;
+        }
+
+        private static string ReadFile(string path)
+        {
+            var content = File.ReadAllText(path);
+            return content;
+        }
+
+        private static void FileMethods2()
+        {
+            //Directory.CreateDirectory(@"c:\temp\folder1");
+            var files = Directory.GetFiles(@"C:\Users\David\source\repos", "*.sln", SearchOption.AllDirectories);
+            //foreach (var file in files)
+            //{
+            //    Console.WriteLine(file);
+            //}
+            var directories = Directory.GetDirectories(@"C:\Users\David\source\repos", "*.*", SearchOption.AllDirectories);
+            foreach (var directory in directories)
+            {
+                Console.WriteLine(directory);
+            }
+        }
+
+        private static void FileMethods()
+        {
+            var path = @"c:\temp\somefile.jpeg";
+            File.Copy(@"c:\temp\myfile.jpeg", @"c:\temp\myfile2.jpeg", true);
+            File.Delete(path);
+            if (File.Exists(path))
+            {
+                //
+            }
+            var content = File.ReadAllText(path);
+
+
+            var fileInfo = new FileInfo(path);
+            fileInfo.CopyTo("...");
+            fileInfo.Delete();
+            if (fileInfo.Exists)
+            {
+
+            }
         }
 
         private static void CountVowels()
